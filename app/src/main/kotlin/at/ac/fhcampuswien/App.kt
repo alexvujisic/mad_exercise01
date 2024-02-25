@@ -3,9 +3,34 @@
  */
 package at.ac.fhcampuswien
 
+import java.lang.IllegalArgumentException
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.pow
+import kotlin.math.roundToInt
+
 class App {
     // Game logic for a number guessing game
     fun playNumberGame(digitsToGuess: Int = 4) {
+        val numbersToGuess = generateRandomNonRepeatingNumber(4)
+        println(8576)
+        do {
+
+            println("Type in numbers:")
+            val input = readln().toInt()
+            if (true) {
+                println("input: $input")
+                checkUserInputAgainstGeneratedNumber(input, 8576)
+                println("count: " + getRightPlaced(input, numbersToGuess))
+
+            } else {
+                println("error")
+            }
+        }while (false)
+
+
+
+
         //TODO: build a menu which calls the functions and works with the return values
     }
 
@@ -25,7 +50,26 @@ class App {
      */
     val generateRandomNonRepeatingNumber: (Int) -> Int = { length ->
         //TODO implement the function
-        0   // return value is a placeholder
+        var finalNumber = 0.0
+        if(length in 1..9){
+            var generatedNumber = 0.1
+            var randomNumber = 0
+            val usedNumbers = mutableSetOf<Int>()
+            val base = 10.0
+            for(i in length downTo 1 step 1) {
+                do {
+                    generatedNumber = Math.random() * 10
+                    randomNumber = generatedNumber.roundToInt()
+                } while (randomNumber !in 0..9 || (randomNumber in usedNumbers)) //check if 0 to 9 and already used
+                usedNumbers.add(randomNumber)
+                val multiplier = base.pow(i-1)
+                finalNumber += (randomNumber * multiplier)
+            }
+        }
+        else{
+            throw IllegalArgumentException()
+        }
+        finalNumber.toInt()   // return value is a placeholder
     }
 
     /**
@@ -46,11 +90,91 @@ class App {
      */
     val checkUserInputAgainstGeneratedNumber: (Int, Int) -> CompareResult = { input, generatedNumber ->
         //TODO implement the function
-        CompareResult(0, 0)   // return value is a placeholder
+        var n = 0 //right numbers
+        var m = 0 //right places
+
+        if(getDigits(input) == getDigits(generatedNumber)){
+            if(input == generatedNumber){
+                n = getDigits(generatedNumber)
+                m = getDigits(generatedNumber)
+            }
+            n = getRightNumbers(input, generatedNumber)
+            m = getRightPlaced(input, generatedNumber)
+
+        }else{
+            throw IllegalArgumentException()
+        }
+
+        CompareResult(n, m)   // return value is a placeholder
+    }
+
+    private fun getDigits(number: Int): Int {
+        return floor(log10(number.toDouble()) + 1).toInt()
+    }
+
+    private fun getRightNumbers(number: Int, generatedNumber: Int): Int{
+        var digitsInNumber = mutableSetOf<Int>()
+        var digitsInGeneratedNumber = mutableSetOf<Int>()
+        var currentNumber = number
+        var count = 0
+        while(currentNumber > 0){
+            digitsInNumber += currentNumber % 10
+            currentNumber /= 10
+        }
+        //digitsInNumber.reverse()
+
+        currentNumber = generatedNumber
+        while(currentNumber > 0){
+            digitsInGeneratedNumber += currentNumber % 10
+            currentNumber /= 10
+        }
+        //digitsInGeneratedNumber.reverse()
+
+        for(i in (digitsInNumber.size - 1) downTo 0 step 1){
+            for(j in (digitsInGeneratedNumber.size - 1) downTo 0 step 1){
+                if(digitsInNumber.elementAt(i) == digitsInGeneratedNumber.elementAt(j)){
+                    count++
+                }
+            }
+        }
+        return count
+    }
+
+    private fun getRightPlaced(number: Int, generatedNumber: Int): Int{
+        var digitsInNumber = mutableSetOf<Int>()
+        var digitsInGeneratedNumber = mutableSetOf<Int>()
+        var currentNumber = number
+        var count = 0
+        while(currentNumber > 0){
+            digitsInNumber += currentNumber % 10
+            currentNumber /= 10
+        }
+        //digitsInNumber.reverse()
+
+        currentNumber = generatedNumber
+        while(currentNumber > 0){
+            digitsInGeneratedNumber += currentNumber % 10
+            currentNumber /= 10
+        }
+        //digitsInGeneratedNumber.reverse()
+
+        for(i in (digitsInNumber.size - 1) downTo 0 step 1){
+            for(j in (digitsInGeneratedNumber.size - 1) downTo 0 step 1) {
+                if (digitsInNumber.elementAt(i) == digitsInGeneratedNumber.elementAt(i)) {
+                    count++
+                    break
+                }
+            }
+        }
+        return count
+
     }
 }
 
 fun main() {
     println("Hello World!")
+    val app = App()
+    app.playNumberGame(4)
     // TODO: call the App.playNumberGame function with and without default arguments
+
 }
