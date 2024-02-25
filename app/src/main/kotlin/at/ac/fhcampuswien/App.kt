@@ -159,11 +159,8 @@ class App {
         //digitsInGeneratedNumber.reverse()
 
         for(i in (digitsInNumber.size - 1) downTo 0 step 1){
-            for(j in (digitsInGeneratedNumber.size - 1) downTo 0 step 1) {
-                if (digitsInNumber.elementAt(i) == digitsInGeneratedNumber.elementAt(i)) {
-                    count++
-                    break
-                }
+            if (digitsInNumber.elementAt(i) == digitsInGeneratedNumber.elementAt(i)) {
+                count++
             }
         }
         if(digitsInNumber.size == 1){

@@ -8,18 +8,35 @@
 
 ## Questions
 ### Describe how Kotlin handles null safety. What are nullable types and non-null types in Kotlin? (0,5 points)
-
 <span style="color:blue">Provide your answer here! </span>
+
+The safe call operator in Kotlin, is one of the methods to impose “Null Safety Checks” on the nullable variables.
+If the left-hand side of the operator is null, then it will return null value.
+If the left-hand side of the operator is not null, then it will return the result of the right-hand side expression.
+Nullable types:
+Nullable types (?), Safe Calls (?.), evlis operator (?:), Safe cast (as?)
+Non-null types:
+Non-Null Assertion Operator (!!), Lateinit Modifier (lateinit), Platform Types
 > Note: you can also use code snippets to illustrate your answer. 
 
 ```kotlin 
 // example code snippet
-val a: String = "value" // non-null type
+val a: String = "value" // non-null typen
 ```
 
 ### What are lambda expressions and higher order functions in Kotlin? Why would you store a function inside a variable? (0,5 points)
 
 <span style="color:blue">Provide your answer here!</span>
+
+A higher-order function is a function that takes functions as parameters, or returns a function.
+Lambda expressions is a function literals. Function literals are functions that are not declared but are passed immediately as an expression.
+Storing variables in functions can be useful for several reasons:
+Passing Functions as Parameters: You can pass functions as arguments to other functions. This enables you to customize the behavior of a function dynamically.
+
+Returning Functions from Functions: Higher-order functions can return functions as results. This allows for dynamic creation of functions based on certain conditions or configurations.
+
+Closures: Functions stored in variables capture their surrounding context, creating closures. This means they can access variables from the enclosing scope, even after the enclosing function has finished execution.
+
 
 ### Provide a solution for the following number guessing game inside `App.kt`. (3 points)
 
