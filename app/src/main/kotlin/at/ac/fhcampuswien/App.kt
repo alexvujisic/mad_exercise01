@@ -166,6 +166,13 @@ class App {
                 }
             }
         }
+        if(digitsInNumber.size == 1){
+            for(i in (digitsInGeneratedNumber.size - 1) downTo 0 step 1){
+                if (digitsInNumber.elementAt(0) == digitsInGeneratedNumber.elementAt(i)){
+                    count++
+                }
+            }
+        }
         return count
 
     }
